@@ -81,6 +81,7 @@ class ElasticMakeIndicesCommand extends Command
                     'index' => $index,
                     'type' => $type,
                     'body' => [
+                        'dynamic' => false,
                         'properties' => $mapping
                     ]
                 ]);
