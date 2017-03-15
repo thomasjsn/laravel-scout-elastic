@@ -47,7 +47,7 @@ class ElasticMakeIndicesCommand extends Command
 
         foreach ($indices as $index) {
 
-            $indexConfig = config("elasticsearch.indices.{$index}");
+            $indexConfig = config("elasticsearch.indices.$index");
 
             if(is_null($indexConfig)) {
                 $this->error("Config for index \"{$index}\" not found, skipping...");
@@ -65,24 +65,24 @@ class ElasticMakeIndicesCommand extends Command
             $client->indices()->create([
                 'index' => $index,
                 'body' => [
-                    "settings" => $indexConfig['settings']
+                    'settings' => $indexConfig['settings']
                 ]
             ]);
 
-            if (! isset($indexConfig['mappings'])) {
+            if (! isset($indexConfig['types'])) {
                 continue;
             }
 
-            foreach ($indexConfig['mappings'] as $type => $mapping) {
+            foreach ($indexConfig['types'] as $typeName => $type) {
 
                 // Create mapping for type, from config file
-                $this->info("- Creating mapping for: {$type}");
+                $this->info("- Creating mapping for: {$typeName}");
                 $client->indices()->putMapping([
                     'index' => $index,
-                    'type' => $type,
+                    'type' => $typeName,
                     'body' => [
-                        'dynamic' => false,
-                        'properties' => $mapping
+                        'dynamic' => isset($type['dynamic']) ? $type['dynamic'] : true,
+                        'properties' => $type['mapping']
                     ]
                 ]);
             }
