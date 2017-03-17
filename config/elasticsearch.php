@@ -75,5 +75,9 @@ return [
                 ],
             ],
         ]
+    ],
+    
+    'settings' => [
+        'eloquent_reload' => true
     ]
 ];

@@ -173,8 +173,10 @@ class ElasticsearchEngine extends Engine
 
         // Sorting
         if(isset($options['sorting']) && count($options['sorting'])) {
-            $params['body']['sort'] = array_merge($params['body']['sort'],
-                $options['sorting']);
+            $params['body']['sort'] = array_merge(
+                $options['sorting'],
+                $params['body']['sort']
+            );
         }
 
         return $this->elastic->search($params);
@@ -239,7 +241,11 @@ class ElasticsearchEngine extends Engine
             $key = $hit['_id'];
 
             if (isset($models[$key])) {
-                return $models[$key];
+                $model = $models[$key];
+                if(!config('elasticsearch.settings.eloquent_reload')){
+                    $model->fill($hit['_source']);
+                }
+                return $model;
             }
         })->filter();
     }
