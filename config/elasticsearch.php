@@ -52,42 +52,32 @@ return [
     | You may specify your mappings in the model if you like that approach,
     | just make a static method, e.g. mapping() and refer to it here, like:
     |
-    | 'mappings' => [
-    |     'articles' => \App\Article::mapping()
-    | ]
+    | 'articles' => [
+    |     'mapping' => \App\Models\Product::mapping()
+    | ],
     |
     */
 
     'indices' => [
-
-        'laravel' => [
+        'laravel_project' => [
             'settings' => [
                 "number_of_shards" => 1,
                 "number_of_replicas" => 0,
             ],
-            'mappings' => [
+            'types' => [
                 'articles' => [
-                    'title' => [
-                        'type' => 'string'
+                    'dynamic' => true,
+                    'mapping' => [
+                        'title' => [
+                            'type' => 'string'
+                        ]
                     ]
-                ]
-            ]
-        ],
-
-        'another_index' => [
-            'settings' => [
-                "number_of_shards" => 1,
-                "number_of_replicas" => 0,
+                ],
             ],
-            'mappings' => [
-                'articles' => [
-                    'title' => [
-                        'type' => 'string'
-                    ]
-                ]
-            ]
         ]
-
+    ],
+    
+    'settings' => [
+        'eloquent_reload' => true
     ]
-
 ];
