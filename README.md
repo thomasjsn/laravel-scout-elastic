@@ -4,7 +4,7 @@
 [![Travis](https://img.shields.io/travis/thomasjsn/laravel-scout-elastic.svg)](https://travis-ci.org/thomasjsn/laravel-scout-elastic)
 [![Packagist](https://img.shields.io/packagist/v/thomasjsn/laravel-scout-elastic.svg)](https://packagist.org/packages/thomasjsn/laravel-scout-elastic)
 
-This package makes is the [Elasticsearch](https://www.elastic.co/products/elasticsearch) driver for Laravel Scout.
+This package provides an [Elasticsearch](https://www.elastic.co/products/elasticsearch) driver for Laravel Scout.
 
 ## Contents
 
